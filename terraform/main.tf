@@ -71,11 +71,11 @@
 # }
 
 
-data "google_compute_default_service_account" "default" {
-  depends_on = [
-    google_project_service.services["compute.googleapis.com"]
-  ]
-}
+# data "google_compute_default_service_account" "default" {
+#   depends_on = [
+#     google_project_service.services["compute.googleapis.com"]
+#   ]
+# }
 
 # resource "google_cloud_scheduler_job" "jobs" {
 #   project = google_project.kirsch_data_platform.project_id
