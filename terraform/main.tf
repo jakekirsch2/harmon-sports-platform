@@ -14,10 +14,17 @@ locals {
   ]
 }
 
+resource "google_project_service" "resource-manager-service" {
+  service = "cloudresourcemanager.googleapis.com"
+}
+
 resource "google_project_service" "services" {
   for_each                   = toset(local.services)
   service                    = each.key
   disable_dependent_services = true
+  depends_on = [
+    google_project_service.resource-manager-service
+  ]
 }
 
 resource "google_project_iam_binding" "data_platform_owner" {
