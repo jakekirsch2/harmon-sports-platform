@@ -29,7 +29,7 @@ steps:
   args:
   - 'build'
   - '-t'
-  - 'us-central1-docker.pkg.dev/harmon-sports-platform/docker-repository/app:$SHORT_SHA'
+  - 'us-central1-docker.pkg.dev/harmon-sports-platform/docker-repository/app:prod'
   - './app'
 
 # This step pushes the image to Artifact Registry
@@ -39,7 +39,7 @@ steps:
   id: Push
   args:
   - 'push'
-  - 'us-central1-docker.pkg.dev/harmon-sports-platform/docker-repository/app:$SHORT_SHA'
+  - 'us-central1-docker.pkg.dev/harmon-sports-platform/docker-repository/app:prod'
 
 - id: 'tf init'
   name: 'hashicorp/terraform:1.0.0'
