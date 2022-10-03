@@ -1,56 +1,56 @@
-# locals {
-#   services = [
-#     "storage-api.googleapis.com",
-#     "container.googleapis.com",
-#     "cloudfunctions.googleapis.com",
-#     "run.googleapis.com",
-#     "artifactregistry.googleapis.com",
-#     "cloudscheduler.googleapis.com",
-#     "iam.googleapis.com",
-#     "compute.googleapis.com",
-#     "bigquery.googleapis.com",
-#     "bigqueryconnection.googleapis.com",
-#     "container.googleapis.com"
-#   ]
-# }
+locals {
+  services = [
+    "storage-api.googleapis.com",
+    "container.googleapis.com",
+    "cloudfunctions.googleapis.com",
+    "run.googleapis.com",
+    "artifactregistry.googleapis.com",
+    "cloudscheduler.googleapis.com",
+    "iam.googleapis.com",
+    "compute.googleapis.com",
+    "bigquery.googleapis.com",
+    "bigqueryconnection.googleapis.com",
+    "container.googleapis.com"
+  ]
+}
 
-# resource "google_project_service" "services" {
-#   for_each                   = toset(local.services)
-#   service                    = each.key
-#   disable_dependent_services = true
-# }
+resource "google_project_service" "services" {
+  for_each                   = toset(local.services)
+  service                    = each.key
+  disable_dependent_services = true
+}
 
-# resource "google_project_iam_binding" "data_platform_owner" {
-#   project = "harmon-sports-platform"
-#   role    = "roles/owner"
+resource "google_project_iam_binding" "data_platform_owner" {
+  project = "harmon-sports-platform"
+  role    = "roles/owner"
 
-#   members = [
-#     "user:jakekirsch11@gmail.com"
-#   ]
-# }
+  members = [
+    "user:jakekirsch11@gmail.com", "922320915402@cloudbuild.gserviceaccount.com"
+  ]
+}
 
-# resource "google_project_iam_binding" "data_platform_viewer" {
-#   project = "harmon-sports-platform"
-#   role    = "roles/viewer"
+resource "google_project_iam_binding" "data_platform_viewer" {
+  project = "harmon-sports-platform"
+  role    = "roles/viewer"
 
-#   members = [
-#   ]
-# }
+  members = [
+  ]
+}
 
-# resource "google_storage_bucket" "data_platform_data" {
-#   name          = "harmon-sports-platform-data"
-#   location      = "us-central1"
-#   force_destroy = true
-# }
+resource "google_storage_bucket" "data_platform_data" {
+  name          = "harmon-sports-platform-data"
+  location      = "us-central1"
+  force_destroy = true
+}
 
-# resource "google_artifact_registry_repository" "repositories" {
-#   location      = "us-central1"
-#   repository_id = "docker-repository"
-#   format        = "DOCKER"
-#   depends_on = [
-#     google_project_service.services["artifactregistry.googleapis.com"]
-#   ]
-# }
+resource "google_artifact_registry_repository" "repositories" {
+  location      = "us-central1"
+  repository_id = "docker-repository"
+  format        = "DOCKER"
+  depends_on = [
+    google_project_service.services["artifactregistry.googleapis.com"]
+  ]
+}
 
 # resource "google_cloud_run_service" "run_service" {
 #   project = google_project.kirsch_data_platform.project_id
@@ -71,11 +71,11 @@
 # }
 
 
-# data "google_compute_default_service_account" "default" {
-#   depends_on = [
-#     google_project_service.services["compute.googleapis.com"]
-#   ]
-# }
+data "google_compute_default_service_account" "default" {
+  depends_on = [
+    google_project_service.services["compute.googleapis.com"]
+  ]
+}
 
 # resource "google_cloud_scheduler_job" "jobs" {
 #   project = google_project.kirsch_data_platform.project_id
