@@ -7,7 +7,7 @@ terraform {
   }
 
   backend "gcs" {
-    bucket = "terraform-state-bucket"
+    bucket = "harmon-terraform-state"
     prefix = "terraform"
   }
 }
