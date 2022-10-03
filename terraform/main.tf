@@ -24,17 +24,14 @@ resource "google_project_iam_binding" "data_platform_owner" {
   project = "harmon-sports-platform"
   role    = "roles/owner"
 
-  members = [
-    "user:jakekirsch11@gmail.com", "serviceAccount:922320915402@cloudbuild.gserviceaccount.com"
-  ]
+  members = local.owners
 }
 
 resource "google_project_iam_binding" "data_platform_viewer" {
   project = "harmon-sports-platform"
   role    = "roles/viewer"
 
-  members = [
-  ]
+  members = local.viewers
 }
 
 resource "google_storage_bucket" "data_platform_data" {
@@ -77,19 +74,18 @@ data "google_compute_default_service_account" "default" {
 }
 
 # resource "google_cloud_scheduler_job" "jobs" {
-#   project = google_project.kirsch_data_platform.project_id
-#   name             = "get_opendoor"
-#   description      = "get_opendoor"
+#   name             = "testing"
+#   description      = "testing"
 #   schedule         = "0 7 * * *"
 #   time_zone        = "America/Mexico_City"
 
 #   retry_config {
-#     retry_count = 1
+#     retry_count = 0
 #   }
 
 #   http_target {
 #     http_method = "POST"
-#     uri         = "https://get-opendoor-gwmmhrzkra-uc.a.run.app"
+#     uri         = google_cloud_run_service.run_service.status[0].url
 #     body        = base64encode("{}")
 #     oidc_token {
 #       service_account_email = data.google_compute_default_service_account.default.email
