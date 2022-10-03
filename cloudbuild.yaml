@@ -27,9 +27,10 @@ steps:
 - name: 'gcr.io/cloud-builders/docker'
   id: Build
   args:
-  - 'cd app'
-  - |
-      build -t us-central1-docker.pkg.dev/harmon-sports-platform/docker-repository/app:$SHORT_SHA .
+  - 'build'
+  - '-t'
+  - 'us-central1-docker.pkg.dev/harmon-sports-platform/docker-repository/app:$SHORT_SHA'
+  - './app'
 
 # This step pushes the image to Artifact Registry
 # The PROJECT_ID and SHORT_SHA variables are automatically
@@ -37,9 +38,8 @@ steps:
 - name: 'gcr.io/cloud-builders/docker'
   id: Push
   args:
-  - 'cd app'
-  - |
-      push us-central1-docker.pkg.dev/harmon-sports-platform/docker-repository/app:$SHORT_SHA
+  - 'push'
+  - 'us-central1-docker.pkg.dev/harmon-sports-platform/docker-repository/app:$SHORT_SHA'
 
 - id: 'tf init'
   name: 'hashicorp/terraform:1.0.0'
