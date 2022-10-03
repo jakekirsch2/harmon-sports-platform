@@ -21,6 +21,7 @@ resource "google_project_service" "services" {
 }
 
 resource "google_project_iam_binding" "data_platform_owner" {
+  project = "harmon-sports-platform"
   role    = "roles/owner"
 
   members = [
@@ -29,6 +30,7 @@ resource "google_project_iam_binding" "data_platform_owner" {
 }
 
 resource "google_project_iam_binding" "data_platform_viewer" {
+  project = "harmon-sports-platform"
   role    = "roles/viewer"
 
   members = [
@@ -39,7 +41,6 @@ resource "google_storage_bucket" "data_platform_data" {
   name          = "data-platform-data"
   location      = "us-central1"
   force_destroy = true
-  depends_on    = [google_project_iam_binding.data_platform]
 }
 
 resource "google_artifact_registry_repository" "repositories" {
