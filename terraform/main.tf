@@ -38,7 +38,7 @@ resource "google_project_iam_binding" "data_platform_viewer" {
 }
 
 resource "google_storage_bucket" "data_platform_data" {
-  name          = "data-platform-data"
+  name          = "harmon-sports-platform-data"
   location      = "us-central1"
   force_destroy = true
 }
