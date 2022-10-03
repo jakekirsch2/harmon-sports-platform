@@ -47,6 +47,9 @@ resource "google_artifact_registry_repository" "repositories" {
   location      = "us-central1"
   repository_id = "docker-repository"
   format        = "DOCKER"
+  depends_on = [
+    google_project_service.services["artifactregistry.googleapis.com"]
+  ]
 }
 
 # resource "google_cloud_run_service" "run_service" {
@@ -69,6 +72,9 @@ resource "google_artifact_registry_repository" "repositories" {
 
 
 data "google_compute_default_service_account" "default" {
+  depends_on = [
+    google_project_service.services["compute.googleapis.com"]
+  ]
 }
 
 # resource "google_cloud_scheduler_job" "jobs" {
