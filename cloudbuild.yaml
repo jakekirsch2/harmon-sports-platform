@@ -23,7 +23,25 @@ steps:
       echo "***********************"
       echo "$BRANCH_NAME"
       echo "***********************"
-    
+
+- name: 'gcr.io/cloud-builders/docker'
+  id: Build
+  args:
+  - 'cd app'
+  - 'build'
+  - '-t'
+  - 'us-central1-docker.pkg.dev/harmon-sports-platform/docker-repository/app:$SHORT_SHA'
+  - '.'
+
+# This step pushes the image to Artifact Registry
+# The PROJECT_ID and SHORT_SHA variables are automatically
+# replaced by Cloud Build.
+- name: 'gcr.io/cloud-builders/docker'
+  id: Push
+  args:
+  - 'push'
+  - 'us-central1-docker.pkg.dev/harmon-sports-platform/docker-repository/app:$SHORT_SHA'
+
 - id: 'tf init'
   name: 'hashicorp/terraform:1.0.0'
   entrypoint: 'sh'
