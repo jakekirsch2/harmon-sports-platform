@@ -25,7 +25,7 @@ resource "google_project_iam_binding" "data_platform_owner" {
   role    = "roles/owner"
 
   members = [
-    "user:jakekirsch11@gmail.com", "922320915402@cloudbuild.gserviceaccount.com"
+    "user:jakekirsch11@gmail.com", "serviceAccount:922320915402@cloudbuild.gserviceaccount.com"
   ]
 }
 
