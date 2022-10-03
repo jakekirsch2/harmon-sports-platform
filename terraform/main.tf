@@ -52,23 +52,22 @@ resource "google_artifact_registry_repository" "repositories" {
   ]
 }
 
-# resource "google_cloud_run_service" "run_service" {
-#   project = google_project.kirsch_data_platform.project_id
-#   name = "add-hc-pricing-data"
-#   location = "us-central1"
+resource "google_cloud_run_service" "run_service" {
+  name = "harmon-sports-platform-app"
+  location = "us-central1"
 
-#   template {
-#     spec {
-#       containers {
-#         image = "us-central1-docker.pkg.dev/kirsch-data-platform/docker-repository/add-hc-pricing-data:446ee31"
-#       }
-#       timeout_seconds = 3000
-#     }
-#   }
+  template {
+    spec {
+      containers {
+        image = "us-central1-docker.pkg.dev/harmon-sports-platform/docker-repository/app:prod"
+      }
+      timeout_seconds = 3000
+    }
+  }
 
-#   # Waits for the Cloud Run API to be enabled
-#   depends_on = [google_project_service.services["run.googleapis.com"]]
-# }
+  # Waits for the Cloud Run API to be enabled
+  depends_on = [google_project_service.services["run.googleapis.com"]]
+}
 
 
 data "google_compute_default_service_account" "default" {
